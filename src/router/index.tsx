@@ -1,8 +1,8 @@
-import { Outlet, Route, createBrowserRouter, createRoutesFromChildren, useRouteError } from 'react-router-dom';
+import { Outlet, Route, createBrowserRouter, createRoutesFromChildren } from 'react-router-dom';
 import { styled } from 'styled-components';
-
 import IssueDetail from '../pages/IssueDetail';
 import Issues from '../pages/Issues';
+import ErrorPage from '../components/ErrorPage';
 
 export const OWNER = 'facebook';
 export const REPO = 'react';
@@ -17,47 +17,6 @@ const Layout = () => (
     <Outlet />
   </Container>
 );
-
-export const ErrorPage = () => {
-  const error = useRouteError() as { statusText: string; message: string };
-  return (
-    <ErrorContainer>
-      <ErrorIcon>⚠️</ErrorIcon>
-      <ErrorMessage>{error.statusText || error.message}</ErrorMessage>
-    </ErrorContainer>
-  );
-};
-
-const ErrorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f7f7f7;
-`;
-
-const ErrorIcon = styled.div`
-  font-size: 4em;
-  margin-bottom: 20px;
-`;
-
-const ErrorMessage = styled.div`
-  font-size: 1.2em;
-  margin-bottom: 20px;
-`;
-
-// const ErrorAction = styled.button`
-//   padding: 10px 20px;
-//   background-color: #333;
-//   color: white;
-//   border: none;
-//   border-radius: 5px;
-//   cursor: pointer;
-//   &:hover {
-//     background-color: #555;
-//   }
-// `;
 
 const router = createBrowserRouter(
   createRoutesFromChildren(

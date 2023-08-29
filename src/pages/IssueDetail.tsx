@@ -8,6 +8,7 @@ import { Issue } from '../entity/Issue';
 import { RootState } from '../redux/store';
 import { OWNER, REPO } from '../router';
 import { getIssueDetail } from '../services/github/issues';
+import useError from '../hooks/useError';
 
 const IssueDetail = () => {
   const { id } = useParams();
@@ -15,13 +16,20 @@ const IssueDetail = () => {
   let selectedIssue = issues.find((issue) => issue.number === parseInt(id!));
 
   const [issue, setIssue] = useState<Issue>();
+
+  const handleError = useError();
+
   useEffect(() => {
     if (!selectedIssue) {
-      getIssueDetail(OWNER, REPO, id!).then((issue) => {
-        setIssue(issue);
-      });
+      getIssueDetail(OWNER, REPO, id!)
+        .then((issue) => {
+          setIssue(issue);
+        })
+        .catch((error) => {
+          handleError(error);
+        });
     }
-  }, [id, selectedIssue]);
+  }, [id, selectedIssue, handleError]);
 
   if (!selectedIssue && !issue) return <Loader />;
   if (!selectedIssue) selectedIssue = issue!;
