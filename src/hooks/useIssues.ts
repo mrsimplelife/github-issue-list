@@ -14,12 +14,12 @@ const useIssues = () => {
 
   const pageRef = useRef(1);
 
-  const getMoreIssues = () => {
+  const getMoreIssues = useCallback(() => {
     if (status !== 'loading') {
       pageRef.current += 1;
       dispatch(fetchIssuesBy(pageRef.current));
     }
-  };
+  }, [dispatch, status]);
 
   const loading = status === 'loading';
 
