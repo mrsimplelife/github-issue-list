@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getIssues } from '../../services/github/issues';
-import { OWNER, REPO } from '../../router';
 import { Issue } from '../../entity/Issue';
+import { OWNER, REPO } from '../../router';
+import { getIssues } from '../../services/github/issues';
 
 type IssuesState = {
   issues: Issue[];
