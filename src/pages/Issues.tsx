@@ -14,6 +14,9 @@ const Issues = () => {
 
   const handleScroll = useInfinityScroll(getMoreIssues);
 
+  if (issues.length === 0) {
+    return <Loader />;
+  }
   return (
     <IssueList onScroll={handleScroll}>
       {issues.map((issue, index) => (
@@ -21,10 +24,14 @@ const Issues = () => {
           <Link to={`issue/${issue.number}`}>
             <Item issue={issue} />
           </Link>
-          {(index + 1) % 5 === 0 && <Ad />}
+          {(index + 1) % 4 === 0 && <Ad />}
         </Fragment>
       ))}
-      {loading && <Loader />}
+      {loading && (
+        <BottomLoader>
+          <Loader />
+        </BottomLoader>
+      )}
     </IssueList>
   );
 };
@@ -35,4 +42,11 @@ const IssueList = styled.div`
   border-radius: 4px;
   height: calc(100% - 54.5px);
   overflow: auto;
+`;
+
+const BottomLoader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
 `;
